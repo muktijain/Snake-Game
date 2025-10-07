@@ -26,24 +26,37 @@ function main(ctime) {
 };
 
 function gameEngine(){
+<<<<<<< HEAD
     
+=======
+>>>>>>> c002d9c (gameOverSound fixed)
     // Utility: detect collision
     function isCollide(snake) {
         // If snake bumps into itself
         for (let i = 1; i < snake.length; i++) {
             if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
+<<<<<<< HEAD
                 gameOverSound.play();
+=======
+>>>>>>> c002d9c (gameOverSound fixed)
                 return true;
             };
         };
         // If snake hits wall
         if (snake[0].x >= 18 || snake[0].x <= 0 || snake[0].y >= 18 || snake[0].y <= 0) {
+<<<<<<< HEAD
             gameOverSound.play();
+=======
+>>>>>>> c002d9c (gameOverSound fixed)
             return true;
         };
         return false;
     };
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> c002d9c (gameOverSound fixed)
     //Updating the snake array & food;
     if(isCollide(snakeArr)){
         gameOverSound.play();
