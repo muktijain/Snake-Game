@@ -10,9 +10,13 @@ let lastPaintTime = 0;
 let snakeArr = [
     {x: 13, y: 15}
 ];
-food = {x: 4, y: 12};
+let food = {x: 4, y: 12};
+let gameRunning = true;
+let gameOver = false;
 const board = document.getElementById('board');
 const scoreBox = document.getElementById("scoreBox");
+const gameOverScreen = document.getElementById("gameOver");
+
 
 
 //Game Functions
@@ -25,47 +29,44 @@ function main(ctime) {
     gameEngine();
 };
 
+window.requestAnimationFrame(main);
+
+
 function gameEngine(){
-<<<<<<< HEAD
-    
-=======
->>>>>>> c002d9c (gameOverSound fixed)
+    if (gameOver) return;
+
     // Utility: detect collision
     function isCollide(snake) {
-        // If snake bumps into itself
+        // self-collision
         for (let i = 1; i < snake.length; i++) {
             if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
-<<<<<<< HEAD
-                gameOverSound.play();
-=======
->>>>>>> c002d9c (gameOverSound fixed)
                 return true;
             };
         };
-        // If snake hits wall
-        if (snake[0].x >= 18 || snake[0].x <= 0 || snake[0].y >= 18 || snake[0].y <= 0) {
-<<<<<<< HEAD
-            gameOverSound.play();
-=======
->>>>>>> c002d9c (gameOverSound fixed)
+        //  wall collision
+        if (
+            snake[0].x >= 18 || snake[0].x <= 0 
+            || snake[0].y >= 18 || snake[0].y <= 0
+        ) {
             return true;
         };
         return false;
     };
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> c002d9c (gameOverSound fixed)
-    //Updating the snake array & food;
+    //Game over
     if(isCollide(snakeArr)){
+        gameOver = true;
+
+        gameOverSound.currentTime = 0;
         gameOverSound.play();
         musicSound.pause();
+
         inputDir =  {x: 0, y: 0};
-        alert("Game Over! Press any key to play again.");
-        snakeArr = [{x: 13, y: 15}];
-        musicSound.play();
+        snakeArr = [{ x: 13, y: 15 }];
         score = 0;
+
+        scoreBox.innerHTML = "Game Over! Press Arrow Key to Restart";
+
+        return;
     };
 
     //Moving the snake
@@ -126,33 +127,32 @@ function gameEngine(){
 //Main logic starts here
 window.requestAnimationFrame(main);
 window.addEventListener("keydown", e => {
+       if (gameOver) {
+        snakeArr = [{ x: 13, y: 15 }];
+        food = {
+            x: Math.floor(Math.random() * 15) + 2,
+            y: Math.floor(Math.random() * 15) + 2
+        };
+        score = 0;
+        gameOver = false;
+        musicSound.play();
+        return;
+    }
+
     if (musicSound.paused) musicSound.play();  // start background music
-    moveSound.play();
-    inputDir = {x: 0, y: 1};  //start the game
-    moveSound.play();
+  
     switch (e.key) {
         case "ArrowUp":
-            console.log("ArrowUp");
-            inputDir.x = 0;
-            inputDir.y = -1;
+            if (inputDir.y !== 1) inputDir = { x: 0, y: -1 };
             break;
-         case "ArrowDown":
-            console.log("ArrowDown");
-            inputDir.x = 0;
-            inputDir.y = 1;
+        case "ArrowDown":
+            if (inputDir.y !== -1) inputDir = { x: 0, y: 1 };
             break;
-         case "ArrowLeft":
-            console.log("ArrowLeft");
-            inputDir.x = -1;
-            inputDir.y = 0;
+        case "ArrowLeft":
+            if (inputDir.x !== 1) inputDir = { x: -1, y: 0 };
             break;
-         case "ArrowRight":
-            console.log("ArrowRight");
-            inputDir.x = 1;
-            inputDir.y = 0;
+        case "ArrowRight":
+            if (inputDir.x !== -1) inputDir = { x: 1, y: 0 };
             break;
-    
-        default:
-            break;
-    };
+    }
 });

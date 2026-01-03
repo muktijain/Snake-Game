@@ -80,3 +80,20 @@
     border: 0.25vmin solid rgb(151, 21, 21);
 
 }
+
+#gameOver {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  z-index: 10;
+}
+
+.hidden {
+  display: none;
+}
